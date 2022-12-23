@@ -1,0 +1,444 @@
+{
+  "name": "vscode-kubernetes-commander",
+  "displayName": "Kubernetes Commander",
+  "icon": "images/icon.png",
+  "description": "Kubernetes Commander for VSCode",
+  "version": "1.0.47",
+  "publisher": "sandipchitale",
+  "engines": {
+    "vscode": "^1.57.0"
+  },
+  "extensionDependencies": [
+    "ms-kubernetes-tools.vscode-kubernetes-tools"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "repository": {
+    "url": "https://github.com/sandipchitale/vscode-kubernetes-commander"
+  },
+  "activationEvents": [
+    "onCommand:vscode-kubernetes-commander.show"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "properties": {
+        "vscode-kubernetes-commander.resourceTypes": {
+          "title": "Resource Types",
+          "type": "array",
+          "default": [
+            "nodes",
+            "namespaces",
+            "pods",
+            "podtemplates",
+            "cronjobs",
+            "daemonsets",
+            "deployments",
+            "replicasets",
+            "jobs",
+            "statefulsets",
+            "replicationcontrollers",
+            "configmaps",
+            "secrets",
+            "storageclasses",
+            "persistentvolumes",
+            "persistentvolumeclaims",
+            "volumeattachments",
+            "services",
+            "endpoints",
+            "endpointslices",
+            "ingressclasses",
+            "ingresses",
+            "events",
+            "serviceaccounts",
+            "certificatesigningrequests",
+            "clusterroles",
+            "clusterrolebindings",
+            "roles",
+            "rolebindings",
+            "limitranges",
+            "resourcequotas",
+            "horizontalpodautoscalers",
+            "customresourcedefinitions"
+          ],
+          "items": {
+            "type": "string",
+            "enum": [
+              "apiservices",
+              "bindings",
+              "certificatesigningrequests",
+              "clusterrolebindings",
+              "clusterroles",
+              "componentstatuses",
+              "configmaps",
+              "controllerrevisions",
+              "cronjobs",
+              "csidrivers",
+              "csinodes",
+              "customresourcedefinitions",
+              "daemonsets",
+              "deployments",
+              "endpoints",
+              "endpointslices",
+              "events",
+              "events",
+              "horizontalpodautoscalers",
+              "ingressclasses",
+              "ingresses",
+              "ingresses",
+              "jobs",
+              "leases",
+              "limitranges",
+              "localsubjectaccessreviews",
+              "mutatingwebhookconfigurations",
+              "namespaces",
+              "networkpolicies",
+              "nodes",
+              "persistentvolumeclaims",
+              "persistentvolumes",
+              "poddisruptionbudgets",
+              "pods",
+              "podsecuritypolicies",
+              "podtemplates",
+              "priorityclasses",
+              "replicasets",
+              "replicationcontrollers",
+              "resourcequotas",
+              "rolebindings",
+              "roles",
+              "runtimeclasses",
+              "secrets",
+              "selfsubjectaccessreviews",
+              "selfsubjectrulesreviews",
+              "serviceaccounts",
+              "services",
+              "statefulsets",
+              "storageclasses",
+              "subjectaccessreviews",
+              "tokenreviews",
+              "validatingwebhookconfigurations",
+              "volumeattachments"
+            ]
+          },
+          "description": "Resource Types to show in order"
+        },
+        "vscode-kubernetes-commander.resourceTypesShowOnly": {
+          "title": "Show only Resource Types",
+          "type": "boolean",
+          "default": false,
+          "description": "Show only specified Resource Types"
+        },
+        "vscode-kubernetes-commander.get-options": {
+          "title": "Additonal options for get",
+          "type": "string",
+          "default": "-o wide",
+          "description": "Additional options for get command for hover"
+        },
+        "vscode-kubernetes-commander.shell": {
+          "title": "Shell",
+          "type": "string",
+          "default": "/bin/sh",
+          "enum": [
+            "/bin/sh",
+            "/bin/bash"
+          ],
+          "description": "Shell to use (only /bin/sh or /bin/bash is allowed)"
+        },
+        "vscode-kubernetes-commander.tail-lines": {
+          "title": "Tail lines",
+          "type": "number",
+          "default": "10",
+          "description": "Number of context lines to tail."
+        },
+        "vscode-kubernetes-commander.nsenter-image": {
+          "type": "string",
+          "description": "Specify nsenter images to use e.g. jpetazzo/nsenter:latest. WARNING: Use at your own risk."
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "kubernetes-commander"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "kubernetes-commander",
+        "scopeName": "source.kubernetes-commander",
+        "path": "./syntaxes/kubernetes-commander.tmGrammar.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "vscode-kubernetes-commander.show",
+        "title": "Kubernetes Commander: Show"
+      },
+      {
+        "command": "vscode-kubernetes-commander.settings",
+        "title": "Kubernetes Commander: Settings",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.edit-kubeconfig",
+        "title": "Kubernetes Commander: Edit Kube Config",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.describe",
+        "title": "Kubernetes Commander: Describe",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.describeAllNamespaces",
+        "title": "Kubernetes Commander: Describe All Namespaces",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.describeSpecific",
+        "title": "Kubernetes Commander: Describe specific resource",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.describeSpecificAllNamespaces",
+        "title": "Kubernetes Commander: Describe specific resource from All Namespaces",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.editSpecific",
+        "title": "Kubernetes Commander: Edit specific resource",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.editSpecificAllNamespaces",
+        "title": "Kubernetes Commander: Edit specific resource from All Namespaces",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.explain",
+        "title": "Kubernetes Commander: Explain",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.get",
+        "title": "Kubernetes Commander: Get",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.getAllNamespaces",
+        "title": "Kubernetes Commander: Get from All Namespaces",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.getSpecific",
+        "title": "Kubernetes Commander: Get specific resource",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.getSpecificAllNamespaces",
+        "title": "Kubernetes Commander: Get specific resource from All Namespaces",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.logSpecificPod",
+        "title": "Kubernetes Commander: Log specific pod",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.logSpecificPodAllNamespaces",
+        "title": "Kubernetes Commander: Log specific pod from All Namespaces",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.names",
+        "title": "Kubernetes Commander: Names",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.namesAllNamespaces",
+        "title": "Kubernetes Commander: Names from All Namespaces",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.shellIntoSpecificPod",
+        "title": "Kubernetes Commander: Shell into specific pod",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.shellIntoSpecificPodAllNamespaces",
+        "title": "Kubernetes Commander: Shell into specific pod from All Namespaces",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.tailLogSpecificPod",
+        "title": "Kubernetes Commander: Tail log specific pod",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.tailLogSpecificPodAllNamespaces",
+        "title": "Kubernetes Commander: Tail log specific pod from All Namespaces",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.documentation",
+        "title": "Kubernetes Commander: Documentation",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.reload",
+        "title": "Kubernetes Commander: Reload",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.switch-namespace",
+        "title": "Kubernetes Commander: Switch namespace",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.quit",
+        "title": "Kubernetes Commander: Quit Commander",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.node-entropy",
+        "title": "Kubernetes Commander: Entropy on node",
+        "enablement": "editorReadonly && vscode-kubernetes-commander"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "vscode-kubernetes-commander.edit-kubeconfig",
+        "key": "c"
+      },
+      {
+        "command": "vscode-kubernetes-commander.describe",
+        "key": "ctrl+d"
+      },
+      {
+        "command": "vscode-kubernetes-commander.describeAllNamespaces",
+        "key": "ctrl+alt+shift+d"
+      },
+      {
+        "command": "vscode-kubernetes-commander.describeSpecific",
+        "key": "d"
+      },
+      {
+        "command": "vscode-kubernetes-commander.describeSpecificAllNamespaces",
+        "key": "shift+d"
+      },
+      {
+        "command": "vscode-kubernetes-commander.editSpecific",
+        "key": "e"
+      },
+      {
+        "command": "vscode-kubernetes-commander.editSpecificAllNamespaces",
+        "key": "shift+e"
+      },
+      {
+        "command": "vscode-kubernetes-commander.get",
+        "key": "ctrl+g"
+      },
+      {
+        "command": "vscode-kubernetes-commander.getAllNamespaces",
+        "key": "ctrl+alt+shift+g"
+      },
+      {
+        "command": "vscode-kubernetes-commander.getSpecific",
+        "key": "g"
+      },
+      {
+        "command": "vscode-kubernetes-commander.getSpecificAllNamespaces",
+        "key": "shift+g"
+      },
+      {
+        "command": "vscode-kubernetes-commander.logSpecificPod",
+        "key": "l"
+      },
+      {
+        "command": "vscode-kubernetes-commander.logSpecificPodAllNamespaces",
+        "key": "shift+l"
+      },
+      {
+        "command": "vscode-kubernetes-commander.names",
+        "key": "n"
+      },
+      {
+        "command": "vscode-kubernetes-commander.namesAllNamespaces",
+        "key": "shift+N"
+      },
+      {
+        "command": "vscode-kubernetes-commander.shellIntoSpecificPod",
+        "key": "s"
+      },
+      {
+        "command": "vscode-kubernetes-commander.shellIntoSpecificPodAllNamespaces",
+        "key": "shift+s"
+      },
+      {
+        "command": "vscode-kubernetes-commander.tailLogSpecificPod",
+        "key": "t"
+      },
+      {
+        "command": "vscode-kubernetes-commander.tailLogSpecificPodAllNamespaces",
+        "key": "shift+t"
+      },
+      {
+        "command": "vscode-kubernetes-commander.documentation",
+        "key": "h"
+      },
+      {
+        "command": "vscode-kubernetes-commander.documentation",
+        "key": "ENTER"
+      },
+      {
+        "command": "vscode-kubernetes-commander.quit",
+        "key": "q"
+      },
+      {
+        "command": "vscode-kubernetes-commander.reload",
+        "key": "F5"
+      },
+      {
+        "command": "vscode-kubernetes-commander.settings",
+        "key": "ctrl+,",
+        "when": "editorReadonly && vscode-kubernetes-commander"
+      },
+      {
+        "command": "vscode-kubernetes-commander.switch-namespace",
+        "key": "w"
+      },
+      {
+        "command": "vscode-kubernetes-commander.explain",
+        "key": "x"
+      },
+      {
+        "command": "vscode-kubernetes-commander.node-entropy",
+        "key": "y"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "14.x",
+    "@types/vscode": "^1.57.0",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "eslint": "^7.27.0",
+    "glob": "^7.1.7",
+    "mocha": "^10.2.0",
+    "typescript": "^4.3.2",
+    "vscode-test": "^1.5.2"
+  },
+  "dependencies": {
+    "vscode-kubernetes-tools-api": "^1.3.0"
+  }
+}
